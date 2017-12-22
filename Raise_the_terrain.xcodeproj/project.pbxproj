@@ -12,6 +12,8 @@
 		25EAD3531FE7798E00288E37 /* render_grid.c in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD3521FE7798E00288E37 /* render_grid.c */; };
 		25EAD3551FE77A3000288E37 /* altitude_file_alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD3541FE77A3000288E37 /* altitude_file_alloc.c */; };
 		25EAD35A1FE78A6100288E37 /* mini_algos.c in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD3591FE78A6100288E37 /* mini_algos.c */; };
+		25EAD35C1FED95FE00288E37 /* event_handler.c in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD35B1FED95FE00288E37 /* event_handler.c */; };
+		25EAD35E1FED972600288E37 /* grid_manip.c in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD35D1FED972600288E37 /* grid_manip.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -36,6 +38,8 @@
 		25EAD3541FE77A3000288E37 /* altitude_file_alloc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = altitude_file_alloc.c; sourceTree = "<group>"; };
 		25EAD3561FE77A4C00288E37 /* alt_file */ = {isa = PBXFileReference; lastKnownFileType = text; path = alt_file; sourceTree = "<group>"; };
 		25EAD3591FE78A6100288E37 /* mini_algos.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mini_algos.c; sourceTree = "<group>"; };
+		25EAD35B1FED95FE00288E37 /* event_handler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = event_handler.c; sourceTree = "<group>"; };
+		25EAD35D1FED972600288E37 /* grid_manip.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = grid_manip.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,8 @@
 				25EAD3541FE77A3000288E37 /* altitude_file_alloc.c */,
 				25EAD3561FE77A4C00288E37 /* alt_file */,
 				25EAD3591FE78A6100288E37 /* mini_algos.c */,
+				25EAD35B1FED95FE00288E37 /* event_handler.c */,
+				25EAD35D1FED972600288E37 /* grid_manip.c */,
 			);
 			path = Raise_the_terrain;
 			sourceTree = "<group>";
@@ -147,8 +153,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				25EAD3431FDF4F8B00288E37 /* main.c in Sources */,
+				25EAD35E1FED972600288E37 /* grid_manip.c in Sources */,
 				25EAD3551FE77A3000288E37 /* altitude_file_alloc.c in Sources */,
 				25EAD3531FE7798E00288E37 /* render_grid.c in Sources */,
+				25EAD35C1FED95FE00288E37 /* event_handler.c in Sources */,
 				25EAD35A1FE78A6100288E37 /* mini_algos.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -27,7 +27,7 @@ static int SCREEN_HEIGHT = 800;
 #define POINTS_COUNT 2
 
 //Isometric incline
-#define INCLIN 0.7
+#define INCLIN 0.6
 
 //test
 #define X_MARGIN 630
@@ -55,6 +55,18 @@ static int SCREEN_HEIGHT = 800;
 //};
 //buff
 #define BUFF_SIZE 1024
+
+//global var instance struct
+typedef struct instance_s
+{
+    int angle;
+    int **alt_grid;
+    SDL_Window *window;
+    SDL_Renderer *renderer;
+    
+} instance_t;
+
+extern instance_t instance;
 
 //alog funcs
 float isomet_x(int, int);

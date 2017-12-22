@@ -29,7 +29,7 @@ void render_isomet_grid(SDL_Renderer *rend, int **alt_grid, int angle)
             e_wy = isomet_y((j + 1) * square_size, i * square_size, alt_grid[i][j + 1]);
 
             s_rx = s_wx * cos(a) - s_wy * sin(a);
-            s_ry = s_wx * sin(a) + s_wy * cos(a);
+            s_ry = s_wx * sin(a) + s_wy * cos(a);/*rotate_y(s_wx, s_wy, angle)*/
             e_rx = e_wx * cos(a) - e_wy * sin(a);
             e_ry = e_wx * sin(a) + e_wy * cos(a);
             

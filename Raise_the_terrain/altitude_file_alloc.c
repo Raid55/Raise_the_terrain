@@ -13,25 +13,30 @@ int **altitude_grid(char *alt_file_path)
     int **grid;
     char *tok;
     char line[BUFF_SIZE];
-    FILE *alt_file;
+    FILE *alt_file = NULL;
+    int filePresent;
     int i = 0, j = 0;
     
-    alt_file = fopen(alt_file_path, "r");
+    if (alt_file_path == NULL)
+        filePresent = 0;
+    else
+        alt_file = fopen(alt_file_path, "r"), filePresent = 1;
     
     grid = malloc(sizeof(int *) * GRID_SIZE);
     
     while(i < GRID_SIZE)
         grid[i] = malloc(sizeof(int) * GRID_SIZE), i++;
     
+    if(grid == NULL)
+        return NULL;
+    
     for(i = 0; i < GRID_SIZE; i++)
         for(j = 0;j < GRID_SIZE ; j++)
             grid[i][j]=0;
     
-    if(grid == NULL)
-        return NULL;
-    
     i = 0;
-    while (fgets(line, sizeof(line), alt_file) != NULL)
+    while (filePresent &&
+           fgets(line, sizeof(line), alt_file) != NULL)
     {
 //        printf("line[%s]", line);
 
@@ -57,8 +62,9 @@ int **altitude_grid(char *alt_file_path)
         }
         printf("\n");
     }
-
-    fclose(alt_file);
+    if (alt_file)
+        fclose(alt_file);
+    
     return grid;
 }
 
