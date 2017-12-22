@@ -8,13 +8,27 @@
 
 #include "iso_met.h"
 
-void _grid_rotate_left(int *angle)
+void _grid_rotate_left()
 {
-    angle--;
+    instance->angle--;
 }
-void _grid_rotate_right(int *angle)
+void _grid_rotate_right()
 {
-    angle++;
+    instance->angle++;
 }
-void _grid_alt_down();
-void _grid_alt_up();
+void _grid_alt_down()
+{
+    int i, j;
+
+    for(i = 0; i < GRID_SIZE; i++)
+        for(j = 0;j < GRID_SIZE ; j++)
+            instance->alt_grid[i][j]--;
+}
+void _grid_alt_up()
+{
+    int i, j;
+    
+    for(i = 0; i < GRID_SIZE; i++)
+        for(j = 0;j < GRID_SIZE ; j++)
+            instance->alt_grid[i][j]++;
+}

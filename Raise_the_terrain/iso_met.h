@@ -21,23 +21,23 @@
 #include <sys/types.h>
 
 //Screen dimension constants
-static int SCREEN_WIDTH = 1200;
-static int SCREEN_HEIGHT = 800;
+//static int SCREEN_WIDTH = 1200;
+//static int SCREEN_HEIGHT = 800;
 //Points for draw line func
 #define POINTS_COUNT 2
 
 //Isometric incline
-#define INCLIN 0.6
+#define INCLIN 0.7
 
 //test
-#define X_MARGIN 630
-#define Y_MARGIN 360
+//#define X_MARGIN 630
+//#define Y_MARGIN 360
 
 //Grid point size, always square
 #define GRID_SIZE 8
 
 //margin percentage
-#define MARGIN_PERC 20;
+#define MARGIN_PERC 40;
 
 
 //first point global var
@@ -56,27 +56,46 @@ static int SCREEN_HEIGHT = 800;
 //buff
 #define BUFF_SIZE 1024
 
+//window size control
+typedef struct window_dim_s
+{
+    int SCREEN_WIDTH;
+    int SCREEN_HEIGHT;
+    int X_MARGIN;
+    int Y_MARGIN;
+} window_dim_t;
+
 //global var instance struct
 typedef struct instance_s
 {
     int angle;
     int **alt_grid;
+    window_dim_t *dim;
     SDL_Window *window;
-    SDL_Renderer *renderer;
+    SDL_Renderer *rend;
     
 } instance_t;
 
-extern instance_t instance;
+extern instance_t *instance;
 
 //alog funcs
 float isomet_x(int, int);
 float isomet_y(int, int, int);
-float rotate_x(float, float, int);
-float rotate_y(float, float, int);
+float rotate_x(float, float);
+float rotate_y(float, float);
 
-void render_isomet_grid(SDL_Renderer *rend, int **alt_grid, int angle);
-int **altitude_grid(char *);
-void free_alt_grid(int **grid);
+//grid manip
+void _grid_rotate_left(void);
+void _grid_rotate_right(void);
+void _grid_alt_down(void);
+void _grid_alt_up(void);
+
+//event listener
+int event_listener(void);
+
+void render_isomet_grid(void);
+void altitude_grid(char *alt_file_path);
+void free_alt_grid(void);
 
 //void lol(SDL_Renderer *);
 //void update_first_point(void);

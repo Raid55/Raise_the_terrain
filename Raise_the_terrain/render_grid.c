@@ -8,15 +8,14 @@
 
 #include "iso_met.h"
 
-void render_isomet_grid(SDL_Renderer *rend, int **alt_grid, int angle)
+void render_isomet_grid()
 {
     int i = 0, j = 0;
-    float a = angle * M_PI / 180;
     float s_wx, s_wy, e_wx, e_wy;
     float s_rx, s_ry, e_rx, e_ry;
-    int square_size = 60 * SCREEN_HEIGHT / 100 / (GRID_SIZE - 1);
+    int square_size = 60 * instance->dim->SCREEN_HEIGHT / 100 / (GRID_SIZE - 1);
     
-    SDL_SetRenderDrawColor(rend,0xFF,0xFF,0xFF,0xFF);
+    SDL_SetRenderDrawColor(instance->rend,0xFF,0xFF,0xFF,0xFF);
     while(i < GRID_SIZE)
     {
         j = 0;
@@ -24,28 +23,40 @@ void render_isomet_grid(SDL_Renderer *rend, int **alt_grid, int angle)
         {
             
             s_wx = isomet_x(j * square_size, i * square_size);
-            s_wy = isomet_y(j * square_size, i * square_size, alt_grid[i][j]);
+            s_wy = isomet_y(j * square_size, i * square_size,
+                            instance->alt_grid[i][j]);
             e_wx = isomet_x((j + 1) * square_size, i * square_size);
-            e_wy = isomet_y((j + 1) * square_size, i * square_size, alt_grid[i][j + 1]);
+            e_wy = isomet_y((j + 1) * square_size, i * square_size,
+                            instance->alt_grid[i][j + 1]);
 
-            s_rx = s_wx * cos(a) - s_wy * sin(a);
-            s_ry = s_wx * sin(a) + s_wy * cos(a);/*rotate_y(s_wx, s_wy, angle)*/
-            e_rx = e_wx * cos(a) - e_wy * sin(a);
-            e_ry = e_wx * sin(a) + e_wy * cos(a);
+            s_rx = rotate_x(s_wx, s_wy);
+            s_ry = rotate_y(s_wx, s_wy);
+            e_rx = rotate_x(e_wx, e_wy);
+            e_ry = rotate_y(e_wx, e_wy);
             
-            SDL_RenderDrawLine(rend, s_rx + X_MARGIN, s_ry + Y_MARGIN, e_rx + X_MARGIN, e_ry + Y_MARGIN);
+            SDL_RenderDrawLine(instance->rend,
+                               s_rx + instance->dim->X_MARGIN,
+                               s_ry + instance->dim->Y_MARGIN,
+                               e_rx + instance->dim->X_MARGIN,
+                               e_ry + instance->dim->Y_MARGIN);
             
             s_wx = isomet_x(i * square_size, j * square_size);
-            s_wy = isomet_y(i * square_size, j * square_size, alt_grid[j][i]);
+            s_wy = isomet_y(i * square_size, j * square_size,
+                            instance->alt_grid[j][i]);
             e_wx = isomet_x(i * square_size, (j + 1) * square_size);
-            e_wy = isomet_y(i * square_size, (j + 1) * square_size, alt_grid[j + 1][i]);
+            e_wy = isomet_y(i * square_size, (j + 1) * square_size,
+                            instance->alt_grid[j + 1][i]);
 
-            s_rx = s_wx * cos(a) - s_wy * sin(a);
-            s_ry = s_wx * sin(a) + s_wy * cos(a);
-            e_rx = e_wx * cos(a) - e_wy * sin(a);
-            e_ry = e_wx * sin(a) + e_wy * cos(a);
+            s_rx = rotate_x(s_wx, s_wy);
+            s_ry = rotate_y(s_wx, s_wy);
+            e_rx = rotate_x(e_wx, e_wy);
+            e_ry = rotate_y(e_wx, e_wy);
             
-            SDL_RenderDrawLine(rend, s_rx + X_MARGIN, s_ry + Y_MARGIN, e_rx + X_MARGIN, e_ry + Y_MARGIN);
+            SDL_RenderDrawLine(instance->rend,
+                               s_rx + instance->dim->X_MARGIN,
+                               s_ry + instance->dim->Y_MARGIN,
+                               e_rx + instance->dim->X_MARGIN,
+                               e_ry + instance->dim->Y_MARGIN);
             j++;
         }
         i++;

@@ -8,16 +8,15 @@
 
 #include "iso_met.h"
 
-instance_t instance;
+instance_t *instance;
 
 int main(int ac,char **av)
 {
-    int alt_file;
-    int **alt_grid;
     SDL_bool done = SDL_FALSE;
-    SDL_Window* window = NULL;
     SDL_Event event;
-    SDL_Renderer* renderer = NULL;
+    window_dim_t _dim_init = {1200, 800, 520, 320};
+    instance_t _inst_init = {0, NULL, &_dim_init, NULL, NULL};
+    instance = &_inst_init;
     
     //test
     SDL_Rect testLol = {.x = 20, .y = 20, .w = 300, .h = 30};
@@ -29,34 +28,35 @@ int main(int ac,char **av)
         perror(SDL_GetError()), SDL_Quit();
         return 0;
     }
-    angle = 90;
-    if (SDL_CreateWindowAndRenderer(SCREEN_WIDTH,
-                                    SCREEN_HEIGHT,
+    if (SDL_CreateWindowAndRenderer(instance->dim->SCREEN_WIDTH,
+                                    instance->dim->SCREEN_HEIGHT,
                                     SDL_WINDOW_RESIZABLE,
-                                    &window, &renderer) == 0)
+                                    &(instance->window), &(instance->rend)) == 0)
     {
         if (ac == 2)
         {
             printf("%s", av[1]);
-            alt_grid = altitude_grid(av[1]);
-            if (alt_grid)
+            altitude_grid(av[1]);
+            if (instance->alt_grid)
             {
                 while(!done)
                 {
-                    SDL_SetRenderDrawColor(renderer,0,0,0,0);
-                    SDL_RenderClear(renderer);
+                    SDL_SetRenderDrawColor(instance->rend,0,0,0,0);
+                    SDL_RenderClear(instance->rend);
 
                     while(SDL_PollEvent(&event))
                         if(event.type == SDL_QUIT)
                             done = SDL_TRUE;
-                    SDL_SetRenderDrawColor (renderer, 66, 185, 244, 255);
-                    SDL_RenderDrawRect(renderer, &testLol);
-                    SDL_RenderFillRect (renderer, & testLol);
+                    SDL_SetRenderDrawColor (instance->rend, 66, 185, 244, 255);
+                    SDL_RenderDrawRect(instance->rend, &testLol);
+                    SDL_RenderFillRect (instance->rend, & testLol);
                     SDL_SetTextInputRect(&testLol);
                     SDL_StartTextInput();
-                    render_isomet_grid(renderer, alt_grid, angle);
-                    SDL_RenderPresent(renderer);
-                    SDL_Delay(10);
+                    render_isomet_grid();
+                    SDL_RenderPresent(instance->rend);
+                    if (!event_listener())
+                        break;
+//                    SDL_Delay(10);
                 }
             }
         }
@@ -64,14 +64,14 @@ int main(int ac,char **av)
             perror("No altitude file, derp...");
     }
     
-    if (renderer)
-        SDL_DestroyRenderer(renderer);
+    if (instance->rend)
+        SDL_DestroyRenderer(instance->rend);
         
-    if (window)
-        SDL_DestroyWindow(window);
+    if (instance->window)
+        SDL_DestroyWindow(instance->window);
     
-    if (alt_grid)
-        free_alt_grid(alt_grid);
+    if (instance->alt_grid)
+        free_alt_grid();
     
     SDL_Quit();
     return 0;

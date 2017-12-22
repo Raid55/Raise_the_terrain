@@ -8,13 +8,14 @@
 
 #include "iso_met.h"
 
-int **altitude_grid(char *alt_file_path)
+void altitude_grid(char *alt_file_path)
 {
-    int **grid;
     char *tok;
-    char line[BUFF_SIZE];
+//    char line[BUFF_SIZE];
     FILE *alt_file = NULL;
     int filePresent;
+    char *line = NULL;
+    size_t line_len = 0;
     int i = 0, j = 0;
     
     if (alt_file_path == NULL)
@@ -22,30 +23,33 @@ int **altitude_grid(char *alt_file_path)
     else
         alt_file = fopen(alt_file_path, "r"), filePresent = 1;
     
-    grid = malloc(sizeof(int *) * GRID_SIZE);
+    instance->alt_grid = malloc(sizeof(int *) * GRID_SIZE);
     
     while(i < GRID_SIZE)
-        grid[i] = malloc(sizeof(int) * GRID_SIZE), i++;
+        instance->alt_grid[i] = malloc(sizeof(int) * GRID_SIZE), i++;
     
-    if(grid == NULL)
-        return NULL;
-    
+    if(instance->alt_grid == NULL)
+    {
+        perror("Malloc Failed to alloc spa-ice bihatch!!!");
+        return;
+    }
+    //NULL init for 0 alt in case of no file passed
     for(i = 0; i < GRID_SIZE; i++)
         for(j = 0;j < GRID_SIZE ; j++)
-            grid[i][j]=0;
+            instance->alt_grid[i][j]=0;
     
     i = 0;
     while (filePresent &&
-           fgets(line, sizeof(line), alt_file) != NULL)
+           getline(&line, &line_len, alt_file) != -1)
     {
 //        printf("line[%s]", line);
 
-        j = 0, tok = strtok(line, " ");
+        j = 0, tok = strtok(line, " \n\t");
         while (tok != NULL)
         {
 //            printf("tok[%s]", tok);
-            grid[i][j] = atoi(tok);
-            tok = strtok(NULL, " ");
+            instance->alt_grid[i][j] = atoi(tok);
+            tok = strtok(NULL, " \n\t");
             j++;
 //            printf("tokaft[%d]", grid[i][j - 1]);
         }
@@ -56,7 +60,7 @@ int **altitude_grid(char *alt_file_path)
     {
         for(j = 0; j < GRID_SIZE; j++)
         {
-            printf("%d ",grid[i][j]);
+            printf("%d ",instance->alt_grid[i][j]);
             if(GRID_SIZE < GRID_SIZE - 1)
                 printf("\t");
         }
@@ -64,16 +68,14 @@ int **altitude_grid(char *alt_file_path)
     }
     if (alt_file)
         fclose(alt_file);
-    
-    return grid;
 }
 
-void free_alt_grid(int **grid)
+void free_alt_grid(void)
 {
     int i = 0;
     
     while(i < GRID_SIZE)
-        free(grid[i]), i++;
+        free(instance->alt_grid[i]), i++;
 
-    free(grid);
+    free(instance->alt_grid);
 }
