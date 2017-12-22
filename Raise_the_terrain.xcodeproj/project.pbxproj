@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		25EAD3431FDF4F8B00288E37 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD3421FDF4F8B00288E37 /* main.c */; };
 		25EAD34B1FDF507E00288E37 /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25EAD34A1FDF507E00288E37 /* SDL2.framework */; };
+		25EAD3531FE7798E00288E37 /* render_grid.c in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD3521FE7798E00288E37 /* render_grid.c */; };
+		25EAD3551FE77A3000288E37 /* altitude_file_alloc.c in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD3541FE77A3000288E37 /* altitude_file_alloc.c */; };
+		25EAD35A1FE78A6100288E37 /* mini_algos.c in Sources */ = {isa = PBXBuildFile; fileRef = 25EAD3591FE78A6100288E37 /* mini_algos.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +30,12 @@
 		25EAD33F1FDF4F8B00288E37 /* Raise_the_terrain */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Raise_the_terrain; sourceTree = BUILT_PRODUCTS_DIR; };
 		25EAD3421FDF4F8B00288E37 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		25EAD34A1FDF507E00288E37 /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		25EAD34F1FE483C100288E37 /* iso_met.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iso_met.h; sourceTree = "<group>"; };
+		25EAD3501FE486F300288E37 /* tests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tests; sourceTree = "<group>"; };
+		25EAD3521FE7798E00288E37 /* render_grid.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = render_grid.c; sourceTree = "<group>"; };
+		25EAD3541FE77A3000288E37 /* altitude_file_alloc.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = altitude_file_alloc.c; sourceTree = "<group>"; };
+		25EAD3561FE77A4C00288E37 /* alt_file */ = {isa = PBXFileReference; lastKnownFileType = text; path = alt_file; sourceTree = "<group>"; };
+		25EAD3591FE78A6100288E37 /* mini_algos.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mini_algos.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +70,13 @@
 		25EAD3411FDF4F8B00288E37 /* Raise_the_terrain */ = {
 			isa = PBXGroup;
 			children = (
+				25EAD3501FE486F300288E37 /* tests */,
 				25EAD3421FDF4F8B00288E37 /* main.c */,
+				25EAD34F1FE483C100288E37 /* iso_met.h */,
+				25EAD3521FE7798E00288E37 /* render_grid.c */,
+				25EAD3541FE77A3000288E37 /* altitude_file_alloc.c */,
+				25EAD3561FE77A4C00288E37 /* alt_file */,
+				25EAD3591FE78A6100288E37 /* mini_algos.c */,
 			);
 			path = Raise_the_terrain;
 			sourceTree = "<group>";
@@ -132,6 +147,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				25EAD3431FDF4F8B00288E37 /* main.c in Sources */,
+				25EAD3551FE77A3000288E37 /* altitude_file_alloc.c in Sources */,
+				25EAD3531FE7798E00288E37 /* render_grid.c in Sources */,
+				25EAD35A1FE78A6100288E37 /* mini_algos.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

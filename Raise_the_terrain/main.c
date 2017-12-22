@@ -6,67 +6,61 @@
 //  Copyright © 2017 Raid Co. All rights reserved.
 //
 
-//Using SDL and standard IO
-#include <SDL2/SDL.h>
-#include <stdio.h>
+#include "iso_met.h"
 
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
-int main( int argc, char* args[] )
+int main(int ac,char **av)
 {
-    //The window we'll be rendering to
+    int angle;
+    int alt_file;
+    int **alt_grid;
+    SDL_bool done = SDL_FALSE;
     SDL_Window* window = NULL;
+    SDL_Event event;
+    SDL_Renderer* renderer = NULL;
     
-    //The surface contained by the window
-    SDL_Surface* screenSurface = NULL;
-    
-    //Initialize SDL
-    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
-        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+        perror(SDL_GetError()), SDL_Quit();
+        return 0;
     }
-    else
+    angle = 0;
+    if (SDL_CreateWindowAndRenderer(SCREEN_WIDTH,
+                                    SCREEN_HEIGHT,
+                                    SDL_WINDOW_RESIZABLE,
+                                    &window, &renderer) == 0)
     {
-        //Create window
-        window = SDL_CreateWindow( "SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-        if( window == NULL )
+        if (ac == 2)
         {
-            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-        }
-        else
-        {
-            //Get window surface
-            screenSurface = SDL_GetWindowSurface( window );
-            
-            //Fill the surface white
-            SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 40, 0, 173 ) );
-            
-            //Update the surface
-            SDL_UpdateWindowSurface( window );
-            
-            //Wait two seconds
-            SDL_Delay( 15000 );
-        }
-    }
-    int loop = 1;
-    while(loop)
-    {
-        SDL_Event event;
-        while(SDL_PollEvent(&event))
-        {
-            if(event.type == SDL_QUIT)
+            printf("%s", av[1]);
+            alt_grid = altitude_grid(av[1]);
+            if (alt_grid)
             {
-                loop = 0;
+                while(!done)
+                {
+                    SDL_SetRenderDrawColor(renderer,0,0,0,0);
+                    SDL_RenderClear(renderer);
+//                     if(poll_events() == 1)
+//                       break;
+                    while(SDL_PollEvent(&event))
+                        if(event.type == SDL_QUIT)
+                            done = SDL_TRUE;
+                    render_isomet_grid(renderer, alt_grid, angle);
+                    SDL_RenderPresent(renderer);
+                    SDL_Delay(10);
+                }
             }
         }
+        else
+            perror("No altitude file, derp...");
     }
-    //Destroy window
-    SDL_DestroyWindow( window );
     
-    //Quit SDL subsystems
+    if (renderer)
+        SDL_DestroyRenderer(renderer);
+        
+    if (window)
+        SDL_DestroyWindow(window);
+    
+    free_alt_grid(alt_grid);
     SDL_Quit();
-    
     return 0;
 }
