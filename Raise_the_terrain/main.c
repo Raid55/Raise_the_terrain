@@ -47,11 +47,11 @@ int main(int ac,char **av)
                     while(SDL_PollEvent(&event))
                         if(event.type == SDL_QUIT)
                             done = SDL_TRUE;
-                    SDL_SetRenderDrawColor (instance->rend, 66, 185, 244, 255);
-                    SDL_RenderDrawRect(instance->rend, &testLol);
-                    SDL_RenderFillRect (instance->rend, & testLol);
-                    SDL_SetTextInputRect(&testLol);
-                    SDL_StartTextInput();
+//                    SDL_SetRenderDrawColor (instance->rend, 66, 185, 244, 255);
+//                    SDL_RenderDrawRect(instance->rend, &testLol);
+//                    SDL_RenderFillRect (instance->rend, & testLol);
+//                    SDL_SetTextInputRect(&testLol);
+//                    SDL_StartTextInput();
                     render_isomet_grid();
                     SDL_RenderPresent(instance->rend);
                     if (!event_listener())
