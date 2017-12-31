@@ -8,9 +8,6 @@
 
 #include "iso_met.h"
 
-#define ISOMET_X(x,y)  (inclination * x) - (inclination * y)
-#define ISOMET_Y(x,y,z)  (1 - inclination) * x + (1 - inclination) * y - z
-
 float isomet_x(int x, int y)
 {
     return (INCLIN * x) - (INCLIN * y);
